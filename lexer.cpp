@@ -71,11 +71,29 @@ struct Token {
     int symbol_table_index;
 };
 
-std::ostream& operator<<(std::ostream& out, const token& token) {
+std::ostream& operator<<(std::ostream& out, const Token& token) {
 std::string str;
 str += "<";
 switch (token.type) {
-    KEYWORD
+    case KEYWORD:
+str += "reserved keyword, name = " + token.lexeme;
+break;
+case IDENTIFIER:
+str += "identifier, name = " + token.lexeme +
+", symbol table index #" + std::to_string(token.symbol_table_index);
+break;
+case CONSTANT:
+str += "number, value = " + std::to_string(token.value);
+break;
+case ADD_OP:
+str += "addition arithmetic operator";
+break;
+case SUB_OP:
+str += "subtract arithmetic operator";
+break;
+case MUL_OP:
+str += "multiply arithmetic operator";
+break;
 
 
     
