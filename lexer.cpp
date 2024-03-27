@@ -53,7 +53,28 @@ bool is_reserved(const std::string& identifier) {
 enum TokenType {
     IDENTIFIER,
     KEYWORD,
-    OPERATOR,
+    ASSIGN,
+    ADD_ASSIGN,
+    SUB_ASSIGN,
+    MUL_ASSIGN,
+    DIV_ASSIGN,
+    MOD_ASSIGN,
+    LEFT_SHIFT,
+    RIGHT_SHIFT,
+    INCREMENT,
+    DECREMENT,
+    ARROW,
+    LOGICAL_AND,
+    LOGICAL_OR,
+    LESS_THAN_OR_EQUAL,
+    GREATER_THAN_OR_EQUAL,
+    EQUAL,
+    NOT_EQUAL,
+    BITWISE_AND,
+    BITWISE_OR,
+    BITWISE_XOR,
+    BITWISE_NOT,
+    COMPLEMENT,
     PUNCTUATION,
     CONSTANT,
     COMMENT,
@@ -85,15 +106,66 @@ break;
 case CONSTANT:
 str += "number, value = " + std::to_string(token.value);
 break;
-case ADD_OP:
-str += "addition arithmetic operator";
-break;
-case SUB_OP:
-str += "subtract arithmetic operator";
-break;
-case MUL_OP:
-str += "multiply arithmetic operator";
-break;
+case ASSIGN:
+            str += "assignment operator";
+            break;
+        case ADD_ASSIGN:
+            str += "addition assignment operator";
+            break;
+        case SUB_ASSIGN:
+            str += "subtraction assignment operator";
+            break;
+        case MUL_ASSIGN:
+            str += "multiplication assignment operator";
+            break;
+        case DIV_ASSIGN:
+            str += "division assignment operator";
+            break;
+        case MOD_ASSIGN:
+            str += "modulo assignment operator";
+            break;
+        case INCREMENT:
+            str += "increment operator";
+            break;
+        case DECREMENT:
+            str += "decrement operator";
+            break;
+        case ARROW:
+            str += "arrow operator";
+            break;
+        case LOGICAL_AND:
+            str += "logical AND operator";
+            break;
+        case LOGICAL_OR:
+            str += "logical OR operator";
+            break;
+        case LESS_THAN_OR_EQUAL:
+            str += "less than or equal operator";
+            break;
+        case GREATER_THAN_OR_EQUAL:
+            str += "greater than or equal operator";
+            break;
+        case EQUAL:
+            str += "equality operator";
+            break;
+        case NOT_EQUAL:
+            str += "not equal operator";
+            break;
+        case BITWISE_AND:
+            str += "bitwise AND operator";
+            break;
+        case BITWISE_OR:
+            str += "bitwise OR operator";
+            break;
+        case BITWISE_XOR:
+            str += "bitwise XOR operator";
+            break;
+        case BITWISE_NOT:
+            str += "bitwise NOT operator";
+            break;
+        case COMPLEMENT:
+            str += "complement operator";
+            break;
 }
 
     
