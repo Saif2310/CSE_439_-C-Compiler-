@@ -75,38 +75,68 @@ enum TokenType {
     BITWISE_XOR,
     BITWISE_NOT,
     COMPLEMENT,
-    PUNCTUATION,
-    CONSTANT,
-    COMMENT,
-    CHAR_LITERAL,
-    FORMAT_SPECIFIER,
-    PREPROCESSOR,
-    WHITESPACE,
+
+    INTEGER_CONSTANT,
+    FLOATING_CONSTANT,
+    CHARACTER_CONSTANT,
+    STRING_CONSTANT,
+    LEFT_PAREN,
+    RIGHT_PAREN,
+    LEFT_BRACKET,
+    RIGHT_BRACKET,
+    LEFT_BRACE,
+    RIGHT_BRACE,
+    DOT,
+    ARROW_OPERATOR,
+    COMMA,
+    SEMICOLON,
+    COLON,
+    ELLIPSIS,
+    // Preprocessing Directives
+    HASH,
+    INCLUDE,
+    DEFINE,
+    UNDEF,
+    IFDEF,
+    IFNDEF,
+    ELIF,
+    ELSE,
+    ENDIF,
+    END_OF_FILE,
     ERROR
 };
 
 struct Token {
     TokenType type;
     std::string lexeme;
-    int value;
-    int symbol_table_index;
+    int int_value;  
+    float float_value;  
+    char char_value;  
+    std::string str_value;  
+    int symbol_table_index;  
 };
 
 std::ostream& operator<<(std::ostream& out, const Token& token) {
-std::string str;
-str += "<";
-switch (token.type) {
-    case KEYWORD:
-str += "reserved keyword, name = " + token.lexeme;
-break;
-case IDENTIFIER:
-str += "identifier, name = " + token.lexeme +
-", symbol table index #" + std::to_string(token.symbol_table_index);
-break;
-case CONSTANT:
-str += "number, value = " + std::to_string(token.value);
-break;
-case ASSIGN:
+    std::string str;
+    str += "<";
+    switch (token.type) {
+        case IDENTIFIER:
+            str += "identifier, name = " + token.lexeme +
+                   ", symbol table index #" + std::to_string(token.symbol_table_index);
+            break;
+        case INTEGER_CONSTANT:
+            str += "integer constant, value = " + std::to_string(token.int_value);
+            break;
+        case FLOATING_CONSTANT:
+            str += "floating-point constant, value = " + std::to_string(token.float_value);
+            break;
+        case CHARACTER_CONSTANT:
+            str += "character constant, value = '" + std::string(1, token.char_value) + "'";
+            break;
+        case STRING_CONSTANT:
+            str += "string constant, value = \"" + token.str_value + "\"";
+            break;
+        case ASSIGN:
             str += "assignment operator";
             break;
         case ADD_ASSIGN:
@@ -166,6 +196,79 @@ case ASSIGN:
         case COMPLEMENT:
             str += "complement operator";
             break;
+        case LEFT_PAREN:
+            str += "left parenthesis";
+            break;
+        case RIGHT_PAREN:
+            str += "right parenthesis";
+            break;
+        case LEFT_BRACKET:
+            str += "left bracket";
+            break;
+        case RIGHT_BRACKET:
+            str += "right bracket";
+            break;
+        case LEFT_BRACE:
+            str += "left brace";
+            break;
+        case RIGHT_BRACE:
+            str += "right brace";
+            break;
+        case DOT:
+            str += "dot operator";
+            break;
+        case COMMA:
+            str += "comma";
+            break;
+        case SEMICOLON:
+            str += "semicolon";
+            break;
+        case COLON:
+            str += "colon";
+            break;
+        case ELLIPSIS:
+            str += "ellipsis";
+            break;
+        case HASH:
+            str += "hash";
+            break;
+        case INCLUDE:
+            str += "include";
+            break;
+        case DEFINE:
+            str += "define";
+            break;
+        case UNDEF:
+            str += "undef";
+            break;
+        case IFDEF:
+            str += "ifdef";
+            break;
+        case IFNDEF:
+            str += "ifndef";
+            break;
+        case ELIF:
+            str += "elif";
+            break;
+        case ELSE:
+            str += "else";
+            break;
+        case ENDIF:
+            str += "endif";
+            break;
+        case END_OF_FILE:
+            str += "end-of-file";
+            break;
+        case ERROR:
+            str += "erroneous token, content = " + token.lexeme;
+            break;
+        default:
+            str += "unexpected token";
+            break;
+    }
+    str += ">";
+    out << str;
+    return out;
 }
 
     
