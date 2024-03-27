@@ -92,7 +92,6 @@ enum TokenType {
     SEMICOLON,
     COLON,
     ELLIPSIS,
-    // Preprocessing Directives
     HASH,
     INCLUDE,
     DEFINE,
