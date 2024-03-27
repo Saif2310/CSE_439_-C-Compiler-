@@ -94,7 +94,7 @@ break;
 case MUL_OP:
 str += "multiply arithmetic operator";
 break;
-
+}
 
     
 vector<string> readFileChunks(const string& filename, streamsize chunkSize) {
