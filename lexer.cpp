@@ -310,6 +310,19 @@ int add_to_symbol_table(const std::string& token_name, int offset) {
     return index;
 }
 
+std::ostream& operator<<(std::ostream& out, const symbol_table_t& st) {
+    std::string str = "\n\nSYMBOL TABLE\n\n";
+    int index = 0;
+    for (const auto& symbol : st) {
+        str += std::to_string(index++) + "- Symbol: " + symbol.first + ", at offset(s): ";
+        for (auto offset : symbol.second) {
+            str += std::to_string(offset) + " ";
+        }
+        str += "\n";
+    }
+    out << str;
+    return out;
+}
 
 int main() {
     string filename = "your_file_path.txt";
