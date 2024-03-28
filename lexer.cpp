@@ -66,6 +66,7 @@ enum TokenType {
     ARROW,
     LOGICAL_AND,
     LOGICAL_OR,
+    LOGICAL_NOT,
     LESS_THAN_OR_EQUAL,
     GREATER_THAN_OR_EQUAL,
     EQUAL,
@@ -366,7 +367,7 @@ bool get_next_token_regex(std::string& buffer, Token*& token) {
             case '&': token->type = BITWISE_AND; break;
             case '|': token->type = BITWISE_OR; break;
             case '^': token->type = BITWISE_XOR; break;
-            case '!': token->type = BITWISE_NOT; break;
+            case '!': token->type = LOGICAL_NOT; break;
             case '~': token->type = BITWISE_NOT; break;
             case '(': token->type = LEFT_PAREN; break;
             case ')': token->type = RIGHT_PAREN; break;
