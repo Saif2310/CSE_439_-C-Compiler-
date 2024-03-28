@@ -401,6 +401,14 @@ int main() {
         // Process the chunk
         cout << "Chunk: " << chunk << endl;
     }
+    if (token.type == ERROR) {
+            std::cerr << "Lexer Error: Unrecognized token " << token.lexeme << " at position " << token.lexeme_begin << std::endl;
+            // Handle error, such as skipping the token or stopping further processing
+        } else {
+            // Process token normally
+            std::cout << "Token: " << token << std::endl;
+        }
+
 
     return 0;
 }
