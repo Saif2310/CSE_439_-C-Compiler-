@@ -280,7 +280,7 @@ vector<string> readFileChunks(const string& filename, streamsize chunkSize) {
         return chunks;
     }
 
-    char buffer[chunkSize]; //1024
+    char buffer[1024]; //chunkSize
     while (file.read(buffer, chunkSize)) {
         chunks.push_back(std::string(buffer, file.gcount()));
     }
@@ -324,6 +324,71 @@ std::ostream& operator<<(std::ostream& out, const symbol_table_t& st) {
     return out;
 }
 
+bool get_next_token_regex(std::string& buffer, Token*& token) {
+    static std::regex my_regex("\\s*([a-zA-Z_][a-zA-Z0-9_]*|\\d+(\\.\\d+)?([eE][-+]?\\d+)?)|(==|!=|<=|>=|&&|\\|\\||[+\\-*/%&|<>=!^~])|([(){}[\\],;.:])|([\"'])(?:(?=(\\\\?))\\2.)*?\\7");
+    static std::sregex_iterator my_regex_iterator(buffer.begin(), buffer.end(), my_regex);
+    static std::sregex_iterator end;
+
+    if (my_regex_iterator == end) {
+        return false; // No more tokens
+    }
+
+    std::smatch match = *my_regex_iterator;
+    std::string token_str = match.str();
+    int token_length = token_str.length();
+    token->lexeme_begin = static_cast<int>(match.position());
+    token->lexeme = token_str;
+
+    if (std::regex_match(token_str, std::regex("[a-zA-Z_][a-zA-Z0-9_]*"))) {
+        if (is_reserved(token_str)) {
+            token->type = KEYWORD;
+        } else {
+            token->type = IDENTIFIER;
+        }
+    } else if (std::regex_match(token_str, std::regex("\\d+(\\.\\d+)?([eE][-+]?\\d+)?"))) {
+    if (token_str.find('.') != std::string::npos) {
+        token->type = FLOATING_CONSTANT;
+        token->float_value = std::stof(token_str); // Convert to float
+    } else {
+        token->type = INTEGER_CONSTANT;
+        token->int_value = std::stoi(token_str); // Convert to int
+    }
+} else if (token_length == 1) {
+        switch (token_str[0]) {
+            case '=': token->type = ASSIGN; break;
+            case '+': token->type = ADD_ASSIGN; break;
+            case '-': token->type = SUB_ASSIGN; break;
+            case '*': token->type = MUL_ASSIGN; break;
+            case '/': token->type = DIV_ASSIGN; break;
+            case '%': token->type = MOD_ASSIGN; break;
+            case '<': token->type = LEFT_SHIFT; break;
+            case '>': token->type = RIGHT_SHIFT; break;
+            case '&': token->type = BITWISE_AND; break;
+            case '|': token->type = BITWISE_OR; break;
+            case '^': token->type = BITWISE_XOR; break;
+            case '!': token->type = BITWISE_NOT; break;
+            case '~': token->type = BITWISE_NOT; break;
+            case '(': token->type = LEFT_PAREN; break;
+            case ')': token->type = RIGHT_PAREN; break;
+            case '[': token->type = LEFT_BRACKET; break;
+            case ']': token->type = RIGHT_BRACKET; break;
+            case '{': token->type = LEFT_BRACE; break;
+            case '}': token->type = RIGHT_BRACE; break;
+            case ',': token->type = COMMA; break;
+            case ';': token->type = SEMICOLON; break;
+            case ':': token->type = COLON; break;
+            case '.': token->type = DOT; break;
+            case '"': token->type = STRING_CONSTANT; break;
+            case '\'': token->type = CHARACTER_CONSTANT; break;
+            default: token->type = ERROR; break;
+        }
+    } else {
+        token->type = ERROR;
+    }
+
+    ++my_regex_iterator;
+    return true;
+}
 int main() {
     string filename = "your_file_path.txt";
     streamsize chunkSize = 1024; // Specify your desired chunk size
