@@ -280,7 +280,7 @@ vector<string> readFileChunks(const string& filename, streamsize chunkSize) {
         return chunks;
     }
 
-    char buffer[chunkSize];
+    char buffer[chunkSize]; //1024
     while (file.read(buffer, chunkSize)) {
         chunks.push_back(std::string(buffer, file.gcount()));
     }
