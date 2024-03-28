@@ -293,6 +293,24 @@ vector<string> readFileChunks(const string& filename, streamsize chunkSize) {
     return chunks;
 }
 
+typedef std::vector<std::pair<std::string, std::vector<int>>> symbol_table_t;
+symbol_table_t symbol_table;
+
+int add_to_symbol_table(const std::string& token_name, int offset) {
+    int index = 0;
+    for (const auto& symbol : symbol_table) {
+        if (token_name == symbol.first) {
+            symbol_table[index].second.push_back(offset);
+            return index;
+        }
+        index++;
+    }
+
+    symbol_table.push_back({ token_name, { offset } });
+    return index;
+}
+
+
 int main() {
     string filename = "your_file_path.txt";
     streamsize chunkSize = 1024; // Specify your desired chunk size
