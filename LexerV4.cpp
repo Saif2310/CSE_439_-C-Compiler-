@@ -135,7 +135,7 @@ bool get_next_token(std::string& buffer, Token* token) {
     }
 
     token->lexeme_begin = token->column_number;
-    cout << "Parsing token, line: " << token->line_number << ", column: " << token->lexeme_begin << endl;
+    //cout << "Parsing token, line: " << token->line_number << ", column: " << token->lexeme_begin << endl;
 
     // Determine the token type
     if (isalpha(buffer[0]) || buffer[0] == '_') {
