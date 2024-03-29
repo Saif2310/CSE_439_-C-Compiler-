@@ -237,6 +237,18 @@ bool get_next_token(std::string& buffer, Token* token) {
             buffer.erase(0, 1);
             token->column_number += 1;
             break;
+        case '.':
+            token->type = DOT;
+            token->lexeme = ".";
+            buffer.erase(0, 1);
+            token->column_number += 1;
+            break;
+        case '#':
+            token->type = HASH;
+            token->lexeme = ".";
+            buffer.erase(0, 1);
+            token->column_number += 1;
+            break;
         case '+':
             token->type = ADD;
             token->lexeme = "+";
@@ -315,6 +327,7 @@ bool get_next_token(std::string& buffer, Token* token) {
             buffer.erase(0, 1);
             token->column_number += 1;
             break;
+        
         default:
             token->type = ERROR;
             token->lexeme = "Unknown token";
