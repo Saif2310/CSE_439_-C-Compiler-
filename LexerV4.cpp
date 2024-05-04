@@ -218,7 +218,6 @@ bool get_next_token(std::string &buffer, Token *token)
     }
 
     token->lexeme_begin = token->column_number;
-<<<<<<< HEAD
     if (buffer[0] == '/' && buffer.size() > 1 && buffer[1] == '/')
     {
         token->type = COMMENT;
@@ -253,13 +252,6 @@ bool get_next_token(std::string &buffer, Token *token)
     }
     if (isalpha(buffer[0]) || buffer[0] == '_')
     {
-=======
-    //cout << "Parsing token, line: " << token->line_number << ", column: " << token->lexeme_begin << endl;
-
-    // Determine the token type
-    if (isalpha(buffer[0]) || buffer[0] == '_') {
-        // Identifier or keyword
->>>>>>> b262bcb6358c7e99cc284824ba0df353a9890f45
         size_t i = 1;
         while (i < buffer.size() && (isalnum(buffer[i]) || buffer[i] == '_'))
         {
@@ -372,18 +364,6 @@ bool get_next_token(std::string &buffer, Token *token)
             buffer.erase(0, 1);
             token->column_number += 1;
             break;
-        case '.':
-            token->type = DOT;
-            token->lexeme = ".";
-            buffer.erase(0, 1);
-            token->column_number += 1;
-            break;
-        case '#':
-            token->type = HASH;
-            token->lexeme = ".";
-            buffer.erase(0, 1);
-            token->column_number += 1;
-            break;
         case '+':
             token->type = ADD;
             token->lexeme = "+";
@@ -462,16 +442,9 @@ bool get_next_token(std::string &buffer, Token *token)
             buffer.erase(0, 1);
             token->column_number += 1;
             break;
-<<<<<<< HEAD
         case '#':
             token->type = HASH;
             token->lexeme = "#";
-=======
-        
-        default:
-            token->type = ERROR;
-            token->lexeme = "Unknown token";
->>>>>>> b262bcb6358c7e99cc284824ba0df353a9890f45
             buffer.erase(0, 1);
             token->column_number += 1;
             break;
